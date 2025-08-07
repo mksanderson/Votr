@@ -1,0 +1,26 @@
+.voting-proposal {
+  max-width: 4rem;
+  margin: 0 auto;
+}
+
+.progress-bar {
+  transition: width 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  transition: all 0.2s ease-in-out;
+}
+
+.status-badge {
+  transition: all 0.3s ease-in-out;
+}
+
+input[readonly] {
+  background-color: #f9fafb;
+  cursor: default;
+}
+
+.vote-bar {
+  transition: width 0.5s ease-in-out;
+}
