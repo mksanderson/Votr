@@ -216,20 +216,21 @@ export class ProposalService implements OnDestroy {
       throw voteError;
     }
 
-    // Mark vote in session storage to prevent multiple votes
+    // Mark vote in local storage so it persists across sessions,
+    // deterring multiple votes from the same browser
     const sessionKey = `voted_${voteRequest.proposal_id}`;
     const voteChoiceKey = `vote_choice_${voteRequest.proposal_id}`;
-    sessionStorage.setItem(sessionKey, 'true');
-    sessionStorage.setItem(voteChoiceKey, voteRequest.vote);
+    localStorage.setItem(sessionKey, 'true');
+    localStorage.setItem(voteChoiceKey, voteRequest.vote);
 
     // Reload proposals to get updated vote counts
     this.loadProposals();
   }
 
   async hasUserVoted(proposalId: string, voterId: string): Promise<boolean> {
-    // First check session storage for immediate feedback
+    // First check local storage to track votes across sessions and deter multiple votes
     const sessionKey = `voted_${proposalId}`;
-    const hasVotedLocally = sessionStorage.getItem(sessionKey) === 'true';
+    const hasVotedLocally = localStorage.getItem(sessionKey) === 'true';
     
     if (hasVotedLocally) {
       return true;
@@ -250,18 +251,18 @@ export class ProposalService implements OnDestroy {
 
     const hasVotedInDb = votes && votes.length > 0;
     
-    // If they voted in DB but not marked locally, mark it locally
+    // If they voted in DB but not marked locally, mark it in local storage
     if (hasVotedInDb) {
-      sessionStorage.setItem(sessionKey, 'true');
+      localStorage.setItem(sessionKey, 'true');
     }
 
     return hasVotedInDb;
   }
 
   async getUserVote(proposalId: string, voterId: string): Promise<'yes' | 'no' | null> {
-    // First check session storage for immediate feedback
+    // First check local storage to persist vote choice across sessions and discourage re-voting
     const voteChoiceKey = `vote_choice_${proposalId}`;
-    const localVoteChoice = sessionStorage.getItem(voteChoiceKey) as 'yes' | 'no' | null;
+    const localVoteChoice = localStorage.getItem(voteChoiceKey) as 'yes' | 'no' | null;
     
     if (localVoteChoice) {
       return localVoteChoice;
@@ -282,12 +283,12 @@ export class ProposalService implements OnDestroy {
 
     const dbVoteChoice = votes && votes.length > 0 ? votes[0].vote : null;
     
-    // If they voted in DB but not stored locally, store it locally
+    // If they voted in DB but not stored locally, store it in local storage
     if (dbVoteChoice) {
-      sessionStorage.setItem(voteChoiceKey, dbVoteChoice);
+      localStorage.setItem(voteChoiceKey, dbVoteChoice);
       // Also mark that they voted
       const sessionKey = `voted_${proposalId}`;
-      sessionStorage.setItem(sessionKey, 'true');
+      localStorage.setItem(sessionKey, 'true');
     }
 
     return dbVoteChoice;
