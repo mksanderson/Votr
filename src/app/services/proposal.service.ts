@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { inject, Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Proposal, CreateProposalRequest, VoteRequest } from '../models/proposal.model';
 import { SupabaseService } from './supabase.service';
@@ -14,7 +14,9 @@ export class ProposalService implements OnDestroy {
   private proposalsChannel: RealtimeChannel | null = null;
   private votesChannel: RealtimeChannel | null = null;
 
-  constructor(private supabaseService: SupabaseService) {
+  supabaseService = inject(SupabaseService);
+
+  constructor() {
     this.loadProposals();
     this.subscribeToRealtimeUpdates();
   }
@@ -48,7 +50,7 @@ export class ProposalService implements OnDestroy {
     }
 
     if (proposals) {
-      const updatedProposals = proposals.map((p: any) => this.updateProposalStatus(p as Proposal));
+      const updatedProposals = proposals.map((p: Proposal) => this.updateProposalStatus(p as Proposal));
       this.proposalsSubject.next(updatedProposals);
     }
   }

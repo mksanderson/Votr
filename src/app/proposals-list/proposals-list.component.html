@@ -1,63 +1,21 @@
 <div class="space-y-6">
-  <!-- Tabbed Interface -->
-  <div class="flex border-b">
-    <button
-      (click)="setActiveTab('myProposals')"
-      class="py-2 px-4 font-semibold" [ngClass]="{'border-b-2 border-blue-500': activeTab === 'myProposals'}"
-    >
-      Created by You
-    </button>
-    <button
-      (click)="setActiveTab('otherProposals')"
-      class="py-2 px-4 font-semibold" [ngClass]="{'border-b-2 border-blue-500': activeTab === 'otherProposals'}"
-    >
-      Created by Others
-    </button>
+  <div *ngFor="let proposal of myProposals" class="proposal-item">
+    <app-voting-proposal
+      [proposal]="proposal"
+      [showVotingButtons]="false"
+      [voterId]="currentUserId"
+      [currentUserId]="currentUserId"
+      [isCreator]="true"
+    ></app-voting-proposal>
   </div>
 
-  <!-- My Proposals Tab -->
-  <div *ngIf="activeTab === 'myProposals'" class="space-y-6">
-    <div *ngFor="let proposal of myProposals; trackBy: trackByProposalId" class="proposal-item">
-      <app-voting-proposal
-        [proposal]="proposal"
-        [showVotingButtons]="canUserVoteOnProposal(proposal)"
-        [voterId]="currentUserId"
-        [currentUserId]="currentUserId"
-        [isCreator]="proposal.created_by === currentUserId"
-      ></app-voting-proposal>
-    </div>
-
-    <div *ngIf="myProposals.length === 0" class="text-center py-12">
-      <div class="text-gray-500 text-lg">
-        <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-        </svg>
-        <h3 class="text-xl font-medium mb-2">No proposals created by you yet</h3>
-        <p>Create your first proposal to get started with team voting!</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Other Proposals Tab -->
-  <div *ngIf="activeTab === 'otherProposals'" class="space-y-6">
-    <div *ngFor="let proposal of otherProposals; trackBy: trackByProposalId" class="proposal-item">
-      <app-voting-proposal
-        [proposal]="proposal"
-        [showVotingButtons]="canUserVoteOnProposal(proposal)"
-        [voterId]="currentUserId"
-        [currentUserId]="currentUserId"
-        [isCreator]="proposal.created_by === currentUserId"
-      ></app-voting-proposal>
-    </div>
-
-    <div *ngIf="otherProposals.length === 0" class="text-center py-12">
-      <div class="text-gray-500 text-lg">
-        <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-        </svg>
-        <h3 class="text-xl font-medium mb-2">No proposals created by others yet</h3>
-        <p>There are no proposals created by others yet.</p>
-      </div>
+  <div *ngIf="myProposals.length === 0" class="text-center py-12">
+    <div class="text-gray-500 text-lg">
+      <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+      </svg>
+      <h3 class="text-xl font-medium mb-2">No proposals created by you yet</h3>
+      <p>Create your first proposal to get started with team voting!</p>
     </div>
   </div>
 </div>

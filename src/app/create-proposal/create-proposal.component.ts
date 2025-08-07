@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProposalService } from '../services/proposal.service';
 import { UserService } from '../services/user.service';
 import { CreateProposalRequest } from '../models/proposal.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-proposal',
@@ -25,10 +26,9 @@ export class CreateProposalComponent {
   isSubmitting = false;
   errorMessage = '';
 
-  constructor(
-    private proposalService: ProposalService,
-    private userService: UserService
-  ) {}
+  proposalService = inject(ProposalService);
+  userService = inject(UserService);
+  router = inject(Router);
 
   async onSubmit(): Promise<void> {
     if (this.isFormValid()) {
@@ -42,6 +42,7 @@ export class CreateProposalComponent {
         console.log('Proposal created successfully');
         this.resetForm();
         this.proposalCreated.emit();
+        await this.router.navigate(['/']);
       } catch (error) {
         this.errorMessage = 'Failed to create proposal. Please try again.';
         console.error('Error creating proposal:', error);

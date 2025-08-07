@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProposalService } from '../services/proposal.service';
@@ -17,20 +17,20 @@ import { switchMap } from 'rxjs/operators';
 })
 export class VotePageComponent implements OnInit, OnDestroy {
   proposal$: Observable<Proposal | undefined> = of(undefined);
-  voterId: string = '';
+  voterId = '';
   loading = true;
   error = '';
-  private proposalId: string = '';
+  private proposalId = '';
   private proposalsSubscription?: Subscription;
   public currentProposal?: Proposal;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private proposalService: ProposalService,
-    private userService: UserService,
-    private cd: ChangeDetectorRef
-  ) {}
+  route = inject(ActivatedRoute);
+  router = inject(Router);
+  proposalService = inject(ProposalService);
+  userService = inject(UserService);
+  cd = inject(ChangeDetectorRef);
+
+  
 
   ngOnInit(): void {
     // Generate a unique voter ID for this voting session

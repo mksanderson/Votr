@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Proposal } from '../models/proposal.model';
 import { ProposalService } from '../services/proposal.service';
@@ -13,10 +13,10 @@ import { Subscription } from 'rxjs';
 })
 export class VotingProposalComponent implements OnInit, OnChanges, OnDestroy {
   @Input() proposal!: Proposal;
-  @Input() showVotingButtons: boolean = false;
-  @Input() voterId: string = '';
-  @Input() isCreator: boolean = false;
-  @Input() currentUserId: string = '';
+  @Input() showVotingButtons = false;
+  @Input() voterId = '';
+  @Input() isCreator = false;
+  @Input() currentUserId = '';
 
   isVoting = false;
   isDeleting = false;
@@ -25,7 +25,10 @@ export class VotingProposalComponent implements OnInit, OnChanges, OnDestroy {
   deleteMessage = '';
   private proposalsSubscription?: Subscription;
 
-  constructor(private proposalService: ProposalService, private cd: ChangeDetectorRef) {
+  proposalService = inject(ProposalService);
+  cd = inject(ChangeDetectorRef);
+
+  constructor() {
     // Subscribe to real-time proposal updates
     this.proposalsSubscription = this.proposalService.proposals$.subscribe(proposals => {
       // Find updated proposal data
@@ -157,8 +160,8 @@ export class VotingProposalComponent implements OnInit, OnChanges, OnDestroy {
       sessionStorage.setItem(voteChoiceKey, voteChoice);
       
       setTimeout(() => this.voteMessage = '', 3000);
-    } catch (error: any) {
-      this.voteMessage = error.message || 'Failed to record vote. Please try again.';
+    } catch (error: unknown) {
+      this.voteMessage = (error as Error).message || 'Failed to record vote. Please try again.';
       console.error('Error voting:', error);
     } finally {
       this.isVoting = false;
@@ -183,8 +186,8 @@ export class VotingProposalComponent implements OnInit, OnChanges, OnDestroy {
       await this.proposalService.deleteProposal(this.proposal.id, this.currentUserId);
       this.deleteMessage = 'Proposal deleted successfully!';
       setTimeout(() => this.deleteMessage = '', 3000);
-    } catch (error: any) {
-      this.deleteMessage = error.message || 'Failed to delete proposal. Please try again.';
+    } catch (error: unknown) {
+      this.deleteMessage = (error as Error).message || 'Failed to delete proposal. Please try again.';
       console.error('Error deleting proposal:', error);
       setTimeout(() => this.deleteMessage = '', 3000);
     } finally {

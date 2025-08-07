@@ -1,22 +1,6 @@
 <div class="min-h-screen bg-gray-50 py-8">
   <div class="container mx-auto px-4 max-w-6xl">
-    <!-- Header -->
-    <div class="text-center mb-8">
-      <h1 class="text-4xl font-bold text-gray-800 mb-2">Votr</h1>
-      <p class="text-xl text-gray-600">Team Voting Platform</p>
-    </div>
-
-    <!-- Action Bar -->
-    <div class="flex justify-center mb-8">
-      <button 
-        (click)="toggleCreateForm()" 
-        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-200 shadow-lg">
-        <svg class="inline-block w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-        </svg>
-        {{ showCreateForm ? 'Cancel' : 'Create New Proposal' }}
-      </button>
-    </div>
+    
 
     <!-- Create Proposal Form -->
     <div *ngIf="showCreateForm" class="mb-8">
@@ -25,7 +9,7 @@
 
     <!-- Proposals List -->
     <div *ngIf="!showCreateForm">
-      <h2 class="text-2xl font-bold mb-6 text-gray-800">Active Proposals</h2>
+      
       <app-proposals-list></app-proposals-list>
     </div>
   </div>

@@ -28,8 +28,7 @@ export class UserService {
     return this.userId;
   }
 
-  // For voting links, we can generate a temporary voter ID
-  generateVoterIdFromUrl(proposalId: string): string {
+  generateVoterIdFromUrl(): string {
     const urlParams = new URLSearchParams(window.location.search);
     const voterId = urlParams.get('voter') || this.generateUserId();
     return voterId;

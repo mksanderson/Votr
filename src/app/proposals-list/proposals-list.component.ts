@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProposalService } from '../services/proposal.service';
 import { UserService } from '../services/user.service';
@@ -17,15 +17,13 @@ import { takeUntil } from 'rxjs/operators';
 export class ProposalsListComponent implements OnInit, OnDestroy {
   proposals$: Observable<Proposal[]>;
   myProposals: Proposal[] = [];
-  otherProposals: Proposal[] = [];
-  currentUserId: string = '';
-  activeTab: string = 'myProposals';
+  currentUserId = '';
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private proposalService: ProposalService,
-    private userService: UserService
-  ) {
+  proposalService = inject(ProposalService);
+  userService = inject(UserService);
+
+  constructor() {
     console.log("STARTING UPPP!!!");
     this.proposals$ = this.proposalService.proposals$;
   }
@@ -37,13 +35,11 @@ export class ProposalsListComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (proposals) => {
           this.myProposals = proposals.filter(proposal => proposal.created_by === this.currentUserId);
-          this.otherProposals = proposals.filter(proposal => proposal.created_by !== this.currentUserId);
         },
         error: (error) => {
           console.error('Error loading proposals:', error);
           // Reset arrays on error
           this.myProposals = [];
-          this.otherProposals = [];
         }
       });
   }
@@ -53,16 +49,5 @@ export class ProposalsListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  canUserVoteOnProposal(proposal: Proposal): boolean {
-    // User cannot vote on their own proposals
-    return proposal.created_by !== this.currentUserId;
-  }
-
-  trackByProposalId(index: number, proposal: Proposal): string {
-    return proposal.id;
-  }
-
-  setActiveTab(tabName: string): void {
-    this.activeTab = tabName;
-  }
+  
 }
