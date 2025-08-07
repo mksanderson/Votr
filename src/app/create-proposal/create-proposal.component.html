@@ -1,10 +1,10 @@
-<div class="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6">
-  <h2 class="text-2xl font-bold mb-6 text-gray-800">Create New Proposal</h2>
+<div class="max-w-2xl mx-auto bg-gray-800 text-gray-100 shadow-lg rounded-lg p-6">
+  <h2 class="text-2xl font-bold mb-6 text-gray-100">Create New Proposal</h2>
   
   <form (ngSubmit)="onSubmit()" #proposalForm="ngForm">
     <!-- Title Field -->
     <div class="mb-4">
-      <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+      <label for="title" class="block text-sm font-medium text-gray-300 mb-2">
         Proposal Title *
       </label>
       <input
@@ -13,14 +13,14 @@
         name="title"
         [(ngModel)]="formData.title"
         required
-        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        class="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         placeholder="Enter a clear, concise title for your proposal"
       />
     </div>
 
     <!-- Description Field -->
     <div class="mb-4">
-      <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+        <label for="description" class="block text-sm font-medium text-gray-300 mb-2">
         Description *
       </label>
       <textarea
@@ -29,14 +29,14 @@
         [(ngModel)]="formData.description"
         required
         rows="4"
-        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        class="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         placeholder="Provide detailed information about what you're proposing and why it matters"
       ></textarea>
     </div>
 
     <!-- Duration Field -->
     <div class="mb-4">
-      <label for="duration" class="block text-sm font-medium text-gray-700 mb-2">
+        <label for="duration" class="block text-sm font-medium text-gray-300 mb-2">
         Voting Duration (hours) *
       </label>
       <select
@@ -44,7 +44,7 @@
         name="duration"
         [(ngModel)]="formData.duration_hours"
         required
-        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        class="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
       >
         <option value="1">1 hour</option>
         <option value="6">6 hours</option>
@@ -58,7 +58,7 @@
 
     <!-- Minimum Votes Field -->
     <div class="mb-6">
-      <label for="minVotes" class="block text-sm font-medium text-gray-700 mb-2">
+        <label for="minVotes" class="block text-sm font-medium text-gray-300 mb-2">
         Minimum Votes Required to Pass *
       </label>
       <input
@@ -68,16 +68,16 @@
         [(ngModel)]="formData.minimum_votes"
         required
         min="1"
-        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        class="w-full px-3 py-2 border border-gray-600 rounded-lg bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         placeholder="Enter minimum number of votes needed"
       />
-      <p class="text-sm text-gray-500 mt-1">
+      <p class="text-sm text-gray-400 mt-1">
         The proposal will only pass if it receives at least this many votes and has more 'Yes' than 'No' votes.
       </p>
     </div>
 
     <!-- Error Message -->
-    <div *ngIf="errorMessage" class="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+      <div *ngIf="errorMessage" class="mb-4 p-3 bg-red-900 border border-red-700 text-red-100 rounded-lg">
       {{ errorMessage }}
     </div>
 
@@ -86,7 +86,7 @@
       <button
         type="submit"
         [disabled]="!proposalForm.form.valid || isSubmitting"
-        class="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-bold py-2 px-6 rounded-lg transition-colors duration-200"
+        class="bg-blue-500 hover:bg-blue-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold py-2 px-6 rounded-lg transition-colors duration-200"
       >
         <span *ngIf="isSubmitting" class="inline-flex items-center">
           <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
