@@ -63,13 +63,13 @@ export class VotingProposalComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get statusColor(): string {
-    if (!this.proposal) return 'bg-gray-100 text-gray-800';
+    if (!this.proposal) return 'bg-gray-700 text-gray-200';
     switch (this.proposal.status) {
-      case 'active': return 'bg-blue-100 text-blue-800';
-      case 'passed': return 'bg-green-100 text-green-800';
-      case 'failed': return 'bg-red-100 text-red-800';
-      case 'expired': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'active': return 'bg-blue-900 text-blue-100';
+      case 'passed': return 'bg-green-900 text-green-100';
+      case 'failed': return 'bg-red-900 text-red-100';
+      case 'expired': return 'bg-gray-700 text-gray-200';
+      default: return 'bg-gray-700 text-gray-200';
     }
   }
 
