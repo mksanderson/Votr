@@ -153,11 +153,12 @@ export class VotingProposalComponent implements OnInit, OnChanges, OnDestroy {
       this.userHasVoted = true;
       this.userVote = voteChoice;
       
-      // Store vote in session storage for persistence across refreshes
+      // Store vote in local storage so it persists across browser sessions,
+      // deterring multiple votes from the same device
       const sessionKey = `voted_${this.proposal.id}`;
       const voteChoiceKey = `vote_choice_${this.proposal.id}`;
-      sessionStorage.setItem(sessionKey, 'true');
-      sessionStorage.setItem(voteChoiceKey, voteChoice);
+      localStorage.setItem(sessionKey, 'true');
+      localStorage.setItem(voteChoiceKey, voteChoice);
       
       setTimeout(() => this.voteMessage = '', 3000);
     } catch (error: unknown) {
