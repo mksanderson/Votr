@@ -2,6 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
 
+## PocketBase backend
+
+The application now uses [PocketBase](https://pocketbase.io) as its backend. A `docker-compose.yml` is
+included to run the Angular frontend alongside a PocketBase instance. Run `docker-compose up` to
+start both services locally.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
