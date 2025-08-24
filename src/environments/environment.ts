@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
   pocketbase: {
-    url: 'http://127.0.0.1:8090'
+    url: import.meta.env.NG_APP_PB_URL as string
   }
 };

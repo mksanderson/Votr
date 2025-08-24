@@ -14,6 +14,10 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
+## PocketBase configuration
+
+Set the `NG_APP_PB_URL` environment variable to the URL of your PocketBase instance. Development builds default to `http://127.0.0.1:8090` when this variable is not provided.
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).

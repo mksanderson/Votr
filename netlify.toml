@@ -1,3 +1,6 @@
+ [build.environment]
+   NG_APP_PB_URL = "https://pocketbase.example.com"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
